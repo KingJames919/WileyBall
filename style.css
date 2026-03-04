@@ -276,33 +276,64 @@ canvas {
 
   .menu-row,
   .menu-row-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.35rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .menu-label {
+    grid-column: 1 / -1;
+    font-size: 0.82rem;
+    line-height: 1.1;
   }
 
   .grid-six {
     grid-template-columns: repeat(3, 1fr);
+    gap: 0.3rem;
   }
 
   .grid-four {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.3rem;
   }
 
   .menu-card {
     width: 100%;
-    max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 1rem);
-    padding: 0.75rem;
+    max-height: calc(100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 0.5rem);
+    padding: 0.6rem;
+    border-radius: 10px;
+  }
+
+  .menu-card h1 {
+    margin-bottom: 0.45rem;
+    font-size: clamp(1.15rem, 6vw, 1.45rem);
+  }
+
+  .pill {
+    padding: 0.35rem 0.45rem;
+    min-height: 36px;
+    font-size: 0.84rem;
+  }
+
+  .pill.small {
+    padding: 0.3rem 0.35rem;
+    min-height: 34px;
+    font-size: 0.78rem;
   }
 
   .menu-actions {
     position: sticky;
     bottom: 0;
-    padding-top: 0.5rem;
+    margin-top: 0.35rem;
+    padding-top: 0.35rem;
     background: linear-gradient(180deg, rgba(15, 29, 51, 0), rgba(15, 29, 51, 0.95) 45%);
   }
 
   .play-btn {
     width: 100%;
-    min-height: 46px;
+    min-height: 42px;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.9rem;
   }
 }
 
