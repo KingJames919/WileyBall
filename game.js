@@ -26,6 +26,12 @@ const backgroundButtons = Array.from(document.querySelectorAll('#backgroundGrid 
 const p2LabelEl = document.getElementById('p2Label');
 const p2MoveEl = document.getElementById('p2Move');
 const p2ThrowEl = document.getElementById('p2Throw');
+const touchControlsEl = document.getElementById('touchControls');
+const touchDirButtons = Array.from(document.querySelectorAll('.touch-btn.dir'));
+const touchThrowBtn = document.getElementById('touchThrow');
+const touchStartBtn = document.getElementById('touchStart');
+const touchMenuBtn = document.getElementById('touchMenu');
+const touchRestartBtn = document.getElementById('touchRestart');
 
 const TEAM_SIZES = [1, 2, 3, 4, 5, 8];
 const ROUND_TARGETS = [3, 5, 7, 10];
@@ -84,6 +90,7 @@ const state = {
 };
 
 let audioCtx = null;
+let touchThrowInterval = null;
 
 function ensureAudioContext() {
   if (!audioCtx) {
@@ -1080,6 +1087,117 @@ async function playFromMenu() {
   }
 }
 
+function setTouchKey(code, pressed) {
+  if (pressed) {
+    keys.add(code);
+  } else {
+    keys.delete(code);
+  }
+}
+
+function initTouchControls() {
+  if (!touchControlsEl) return;
+  const isTouch = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+  if (!isTouch) return;
+
+  for (const btn of touchDirButtons) {
+    const keyCode = btn.dataset.key;
+    if (!keyCode) continue;
+
+    const press = (event) => {
+      event.preventDefault();
+      setTouchKey(keyCode, true);
+      btn.classList.add('active');
+    };
+    const release = (event) => {
+      event.preventDefault();
+      setTouchKey(keyCode, false);
+      btn.classList.remove('active');
+    };
+
+    btn.addEventListener('touchstart', press, { passive: false });
+    btn.addEventListener('touchend', release, { passive: false });
+    btn.addEventListener('touchcancel', release, { passive: false });
+  }
+
+  if (touchThrowBtn) {
+    const pressThrow = (event) => {
+      event.preventDefault();
+      state.humanThrowRequest[1] = true;
+      touchThrowBtn.classList.add('active');
+      if (touchThrowInterval) clearInterval(touchThrowInterval);
+      touchThrowInterval = setInterval(() => {
+        state.humanThrowRequest[1] = true;
+      }, 220);
+    };
+    const releaseThrow = (event) => {
+      event.preventDefault();
+      touchThrowBtn.classList.remove('active');
+      if (touchThrowInterval) {
+        clearInterval(touchThrowInterval);
+        touchThrowInterval = null;
+      }
+    };
+
+    touchThrowBtn.addEventListener('touchstart', pressThrow, { passive: false });
+    touchThrowBtn.addEventListener('touchend', releaseThrow, { passive: false });
+    touchThrowBtn.addEventListener('touchcancel', releaseThrow, { passive: false });
+  }
+
+  if (touchStartBtn) {
+    touchStartBtn.addEventListener(
+      'touchstart',
+      (event) => {
+        event.preventDefault();
+        if (state.menuOpen) {
+          playFromMenu();
+        } else {
+          startRound();
+        }
+      },
+      { passive: false }
+    );
+  }
+
+  if (touchMenuBtn) {
+    touchMenuBtn.addEventListener(
+      'touchstart',
+      (event) => {
+        event.preventDefault();
+        openMenu();
+      },
+      { passive: false }
+    );
+  }
+
+  if (touchRestartBtn) {
+    touchRestartBtn.addEventListener(
+      'touchstart',
+      (event) => {
+        event.preventDefault();
+        resetMatch();
+      },
+      { passive: false }
+    );
+  }
+}
+
+function clearTransientInputs() {
+  keys.clear();
+  state.humanThrowRequest[1] = false;
+  state.humanThrowRequest[2] = false;
+  for (const btn of touchDirButtons) {
+    btn.classList.remove('active');
+  }
+  if (touchThrowBtn) {
+    touchThrowBtn.classList.remove('active');
+  }
+  if (touchThrowInterval) {
+    clearInterval(touchThrowInterval);
+    touchThrowInterval = null;
+  }
+}
+
 let lastTs = 0;
 function tick(ts) {
   const dt = Math.min((ts - lastTs) / 1000 || 0, 0.033);
@@ -1121,6 +1239,13 @@ window.addEventListener('keydown', (event) => {
 
 window.addEventListener('keyup', (event) => {
   keys.delete(event.code);
+});
+
+window.addEventListener('blur', clearTransientInputs);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    clearTransientInputs();
+  }
 });
 
 canvas.addEventListener('mousedown', (event) => {
@@ -1202,6 +1327,7 @@ playBtn.addEventListener('click', () => {
 window.addEventListener('resize', resizeCanvas);
 
 updateMenuSelections();
+initTouchControls();
 resizeCanvas();
 resetMatch();
 requestAnimationFrame(tick);

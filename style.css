@@ -19,6 +19,8 @@ body {
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   background: radial-gradient(circle at 20% 0%, #1d3559 0%, var(--bg) 58%);
   color: var(--ink);
+  touch-action: none;
+  overscroll-behavior: none;
 }
 
 .game-wrap {
@@ -222,6 +224,7 @@ canvas {
   border-radius: 0;
   background: linear-gradient(180deg, #1b4b34, #123623);
   display: block;
+  touch-action: none;
 }
 
 .controls {
@@ -243,6 +246,10 @@ canvas {
 .controls p {
   margin: 0.1rem 0;
   font-size: 0.88rem;
+}
+
+.touch-controls {
+  display: none;
 }
 
 @media (max-width: 900px) {
@@ -274,5 +281,78 @@ canvas {
 
   .grid-four {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (pointer: coarse), (max-width: 900px) {
+  .controls {
+    display: none;
+  }
+
+  .touch-controls {
+    position: absolute;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: calc(0.4rem + env(safe-area-inset-bottom));
+    z-index: 12;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    align-items: end;
+  }
+
+  .touch-pad,
+  .touch-actions {
+    background: rgba(10, 21, 39, 0.55);
+    border: 1px solid rgba(119, 169, 230, 0.45);
+    border-radius: 12px;
+    padding: 0.45rem;
+    backdrop-filter: blur(2px);
+  }
+
+  .touch-btn {
+    border: 1px solid #4e7cb2;
+    border-radius: 10px;
+    background: rgba(26, 55, 93, 0.9);
+    color: #eaf3ff;
+    min-height: 44px;
+    padding: 0.4rem 0.55rem;
+    font: 700 0.9rem "Trebuchet MS", "Segoe UI", sans-serif;
+  }
+
+  .touch-btn:active,
+  .touch-btn.active {
+    background: rgba(70, 126, 196, 0.95);
+    border-color: #9cd2ff;
+  }
+
+  .touch-pad {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .touch-middle {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.35rem;
+  }
+
+  .touch-actions {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .touch-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem;
+  }
+
+  .touch-btn.action {
+    min-height: 46px;
+  }
+
+  .touch-btn.secondary {
+    font-size: 0.8rem;
   }
 }

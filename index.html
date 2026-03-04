@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Wileyball</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -101,6 +101,25 @@
           <p>Hide behind props, but not for 3+ seconds</p>
           <p>Space: Start next round</p>
           <p>R: Restart match, 0: Open menu</p>
+        </div>
+      </section>
+
+      <section id="touchControls" class="touch-controls" aria-label="Mobile controls">
+        <div class="touch-pad">
+          <button class="touch-btn dir" data-key="KeyW" type="button">▲</button>
+          <div class="touch-middle">
+            <button class="touch-btn dir" data-key="KeyA" type="button">◀</button>
+            <button class="touch-btn dir" data-key="KeyS" type="button">▼</button>
+            <button class="touch-btn dir" data-key="KeyD" type="button">▶</button>
+          </div>
+        </div>
+        <div class="touch-actions">
+          <button id="touchThrow" class="touch-btn action" type="button">THROW</button>
+          <button id="touchStart" class="touch-btn action secondary" type="button">START</button>
+          <div class="touch-row">
+            <button id="touchMenu" class="touch-btn action secondary" type="button">MENU</button>
+            <button id="touchRestart" class="touch-btn action secondary" type="button">RESTART</button>
+          </div>
         </div>
       </section>
     </main>
