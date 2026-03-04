@@ -38,6 +38,8 @@ body {
   place-items: center;
   background: rgba(2, 8, 18, 0.76);
   backdrop-filter: blur(4px);
+  padding: calc(0.5rem + env(safe-area-inset-top)) 0.5rem calc(0.5rem + env(safe-area-inset-bottom));
+  touch-action: pan-y;
 }
 
 .menu-screen.hidden {
@@ -47,11 +49,13 @@ body {
 .menu-card {
   width: min(980px, 94vw);
   max-height: 92vh;
-  overflow: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   padding: 1rem;
   border-radius: 14px;
   border: 1px solid var(--line);
   background: linear-gradient(180deg, #132642, #0f1d33);
+  touch-action: pan-y;
 }
 
 .menu-card h1 {
@@ -281,6 +285,24 @@ canvas {
 
   .grid-four {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .menu-card {
+    width: 100%;
+    max-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 1rem);
+    padding: 0.75rem;
+  }
+
+  .menu-actions {
+    position: sticky;
+    bottom: 0;
+    padding-top: 0.5rem;
+    background: linear-gradient(180deg, rgba(15, 29, 51, 0), rgba(15, 29, 51, 0.95) 45%);
+  }
+
+  .play-btn {
+    width: 100%;
+    min-height: 46px;
   }
 }
 
