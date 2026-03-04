@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wileyball</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-wrap">
+      <section id="menuScreen" class="menu-screen" aria-label="Main menu">
+        <div class="menu-card">
+          <h1>Wileyball</h1>
+
+          <div class="menu-row">
+            <span class="menu-label">Control Mode</span>
+            <button id="modeOne" class="pill active" type="button">1 Player</button>
+            <button id="modeTwo" class="pill" type="button">2 Players</button>
+          </div>
+
+          <div class="menu-row">
+            <span class="menu-label">Format</span>
+            <button id="formatTeam" class="pill active" type="button">Team</button>
+            <button id="formatFfa" class="pill" type="button">Free For All</button>
+          </div>
+
+          <div class="menu-row menu-row-grid">
+            <span class="menu-label" id="sizeLabel">Team Size</span>
+            <div id="sizeGrid" class="grid-six" role="group" aria-label="Team size options">
+              <button class="pill small active" data-size="1" type="button">1v1</button>
+              <button class="pill small" data-size="2" type="button">2v2</button>
+              <button class="pill small" data-size="3" type="button">3v3</button>
+              <button class="pill small" data-size="4" type="button">4v4</button>
+              <button class="pill small" data-size="5" type="button">5v5</button>
+              <button class="pill small" data-size="8" type="button">8v8</button>
+            </div>
+          </div>
+
+          <div class="menu-row menu-row-grid">
+            <span class="menu-label">Rounds To Win</span>
+            <div id="roundGrid" class="grid-four" role="group" aria-label="Rounds to win options">
+              <button class="pill small" data-rounds="3" type="button">3</button>
+              <button class="pill small active" data-rounds="5" type="button">5</button>
+              <button class="pill small" data-rounds="7" type="button">7</button>
+              <button class="pill small" data-rounds="10" type="button">10</button>
+            </div>
+          </div>
+
+          <div class="menu-row menu-row-grid">
+            <span class="menu-label">Your Character</span>
+            <div id="characterGrid" class="grid-four" role="group" aria-label="Character options">
+              <button class="pill char active" data-character="striker" type="button">Striker</button>
+              <button class="pill char" data-character="blazer" type="button">Blazer</button>
+              <button class="pill char" data-character="frost" type="button">Frost</button>
+              <button class="pill char" data-character="volt" type="button">Volt</button>
+            </div>
+          </div>
+
+          <div class="menu-row menu-row-grid">
+            <span class="menu-label">Background</span>
+            <div id="backgroundGrid" class="grid-four" role="group" aria-label="Background options">
+              <button class="pill small active" data-background="gym" type="button">Gym</button>
+              <button class="pill small" data-background="street" type="button">Street</button>
+              <button class="pill small" data-background="beach" type="button">Beach</button>
+              <button class="pill small" data-background="space" type="button">Space</button>
+            </div>
+          </div>
+
+          <div class="menu-actions">
+            <button id="playBtn" class="play-btn" type="button">Play Match</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="hud">
+        <div class="score"><span id="scoreALabel">Team Left</span>: <span id="scoreAValue">0</span></div>
+        <div class="status" id="status">Open menu and press Play Match.</div>
+        <div class="score"><span id="scoreBLabel">Team Right</span>: <span id="scoreBValue">0</span></div>
+      </section>
+
+      <section id="winnerScreen" class="winner-screen hidden" aria-live="polite">
+        <h2 id="winnerTitle">Winner</h2>
+        <p id="winnerSubtitle">Press R to restart or 0 for menu</p>
+      </section>
+
+      <canvas id="game" aria-label="Dodgeball arena"></canvas>
+
+      <section class="controls">
+        <div>
+          <h2>Player 1</h2>
+          <p>Move: W A S D</p>
+          <p>Throw: F or Left Click</p>
+        </div>
+        <div>
+          <h2 id="p2Label">CPU</h2>
+          <p id="p2Move">Move: Automatic</p>
+          <p id="p2Throw">Throw: Automatic</p>
+        </div>
+        <div>
+          <h2>System</h2>
+          <p>Hide behind props, but not for 3+ seconds</p>
+          <p>Space: Start next round</p>
+          <p>R: Restart match, 0: Open menu</p>
+        </div>
+      </section>
+    </main>
+    <script src="game.js"></script>
+  </body>
+</html>

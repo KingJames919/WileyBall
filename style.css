@@ -1,0 +1,278 @@
+:root {
+  --bg: #091121;
+  --panel: #13243e;
+  --panel-2: #172e4e;
+  --ink: #ecf3ff;
+  --line: #2a4468;
+  --accent: #59c2ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 20% 0%, #1d3559 0%, var(--bg) 58%);
+  color: var(--ink);
+}
+
+.game-wrap {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.menu-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  background: rgba(2, 8, 18, 0.76);
+  backdrop-filter: blur(4px);
+}
+
+.menu-screen.hidden {
+  display: none;
+}
+
+.menu-card {
+  width: min(980px, 94vw);
+  max-height: 92vh;
+  overflow: auto;
+  padding: 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, #132642, #0f1d33);
+}
+
+.menu-card h1 {
+  margin: 0 0 0.85rem;
+  text-align: center;
+  font-size: clamp(1.45rem, 2.6vw, 2.15rem);
+}
+
+.menu-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.menu-row-grid {
+  grid-template-columns: 150px 1fr;
+}
+
+.menu-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #d6e6ff;
+}
+
+.grid-six,
+.grid-four {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.grid-six {
+  grid-template-columns: repeat(6, minmax(64px, 1fr));
+}
+
+.grid-four {
+  grid-template-columns: repeat(4, minmax(78px, 1fr));
+}
+
+.pill {
+  border: 1px solid #335683;
+  border-radius: 8px;
+  background: #122847;
+  color: #deebff;
+  padding: 0.45rem 0.55rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.pill.small {
+  font-size: 0.9rem;
+  padding: 0.4rem 0.45rem;
+}
+
+.pill.active {
+  border-color: #7fc9ff;
+  background: #2f5d98;
+}
+
+.pill:hover,
+.play-btn:hover {
+  filter: brightness(1.08);
+}
+
+.char[data-character='striker'] {
+  border-left: 3px solid #ff8f3f;
+}
+
+.char[data-character='blazer'] {
+  border-left: 3px solid #ff5d5d;
+}
+
+.char[data-character='frost'] {
+  border-left: 3px solid #4ad0ff;
+}
+
+.char[data-character='volt'] {
+  border-left: 3px solid #b2f15f;
+}
+
+.menu-actions {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: center;
+}
+
+.play-btn {
+  border: 1px solid #89d0ff;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #2f79b7, #245a92);
+  color: #f4fbff;
+  padding: 0.65rem 1.4rem;
+  font: 700 1rem "Trebuchet MS", "Segoe UI", sans-serif;
+  cursor: pointer;
+}
+
+.hud {
+  position: absolute;
+  top: 0.65rem;
+  left: 0.65rem;
+  right: 0.65rem;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.winner-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  min-width: min(560px, 88vw);
+  text-align: center;
+  padding: 0.9rem 1.1rem;
+  border-radius: 12px;
+  border: 1px solid #5e88ba;
+  background: rgba(9, 24, 44, 0.88);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.winner-screen.hidden {
+  display: none;
+}
+
+.winner-screen h2 {
+  margin: 0 0 0.25rem;
+  font-size: clamp(1.2rem, 2.8vw, 2rem);
+}
+
+.winner-screen p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #d7e6ff;
+}
+
+.score,
+.status,
+.controls > div {
+  background: color-mix(in oklab, var(--panel), black 20%);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.55rem;
+  text-align: center;
+}
+
+.status {
+  font-size: 0.94rem;
+}
+
+#scoreAValue {
+  color: #ff9f57;
+  font-weight: 700;
+}
+
+#scoreBValue {
+  color: #66d2ff;
+  font-weight: 700;
+}
+
+canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: linear-gradient(180deg, #1b4b34, #123623);
+  display: block;
+}
+
+.controls {
+  position: absolute;
+  left: 0.65rem;
+  right: 0.65rem;
+  bottom: 0.65rem;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.controls h2 {
+  margin: 0 0 0.25rem;
+  font-size: 0.98rem;
+}
+
+.controls p {
+  margin: 0.1rem 0;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 900px) {
+  .hud,
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .hud {
+    top: 0.45rem;
+    left: 0.45rem;
+    right: 0.45rem;
+  }
+
+  .controls {
+    left: 0.45rem;
+    right: 0.45rem;
+    bottom: 0.45rem;
+  }
+
+  .menu-row,
+  .menu-row-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .grid-six {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-four {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
